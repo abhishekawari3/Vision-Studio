@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a0e13;
+  --color-ink-2: #111820;
+  --color-ink-3: #1b2530;
+  --color-line: #2b3746;
+  --color-paper: #f4f1e8;
+  --color-paper-2: #e8e4d6;
+  --color-sun: #ffd60a;
+  --color-sky: #7fd0ff;
+  --color-sky-deep: #2ea8f5;
+  --color-fog: #a3b0be;
+  --color-slate: #465160;
+  --color-alert: #ff9d8f;
+
+  --font-display: "Bricolage Grotesque", "Arial Narrow", sans-serif;
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+:root {
+  --gutter: max(clamp(1.25rem, 4vw, 3rem), calc((100vw - 90rem) / 2 + 3rem));
+}
+
+html {
+  background-color: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: var(--color-ink);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-sun);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--color-paper);
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    padding-inline: var(--gutter);
+  }
+
+  /* Blueprint grid used behind the hero and contact blocks */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(127 208 255 / 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(127 208 255 / 0.09) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 75% at 72% 42%, #000 15%, transparent 78%);
+    mask-image: radial-gradient(ellipse 80% 75% at 72% 42%, #000 15%, transparent 78%);
+  }
+
+  /* Work: native swipe carousel by default, pinned horizontal scroll when there is room */
+  .work-pin {
+    padding-block: 6rem;
+  }
+
+  .work-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .work-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .work-media {
+    aspect-ratio: 3 / 2;
+  }
+
+  .work-head {
+    padding-bottom: 1.75rem;
+  }
+
+  .work-bar {
+    padding-top: 1.75rem;
+  }
+
+  @media (min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+    .work-pin {
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+      padding-block: 4.75rem 1.25rem;
+    }
+
+    .work-viewport {
+      display: flex;
+      min-height: 0;
+      flex: 1;
+      align-items: center;
+      overflow: hidden;
+      scroll-snap-type: none;
+    }
+
+    .work-media {
+      aspect-ratio: auto;
+      height: clamp(8.5rem, 24vh, 17rem);
+    }
+
+    .work-head {
+      padding-bottom: 1.25rem;
+    }
+
+    .work-bar {
+      padding-top: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (min-height: 640px) and (max-height: 759px) and (prefers-reduced-motion: no-preference) {
+    .work-sub {
+      display: none;
+    }
+  }
+}
+
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nudge {
+    animation: nudge 1.8s ease-in-out infinite;
+  }
+}
